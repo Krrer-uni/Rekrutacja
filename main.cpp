@@ -4,15 +4,15 @@
 #include <cfloat>
 
 
-void search(float cost[10][10], std::vector<int> available, float current_cost,float &max, int current){
+void search(float cost[10][10], std::vector<int> available, float current_cost,float &min, int current){
     if(current == 9) {
-        max = std::min(current_cost, max); 
+        min = std::min(current_cost, min); 
     }else{
         for(int i = 0; i < available.size(); i++){
             if(cost[current][available[i]] != -1.0) {
                 std::vector<int> new_available (available);
                 new_available.erase(new_available.begin() + i);
-                search(cost, new_available, current_cost+ cost[current][available[i]], max, available[i]);
+                search(cost, new_available, current_cost+ cost[current][available[i]], min, available[i]);
             }
         }
     }
@@ -77,8 +77,8 @@ int main(){
 
     //stworzenie zbioru wszystkich mozliwych punktów
     std::vector<int> available = {1, 2, 3, 4 ,5 ,6 ,7, 8, 9};
-    float max = FLT_MAX; //ustalenie bazowej odległości maksymalnej
-    search(cost,available, 0, max, 0); //wywołanie funkcji szukającej
-    std:: cout << max << std::endl;
+    float min = FLT_MAX; //ustalenie bazowej odległości maksymalnej
+    search(cost,available, 0, min, 0); //wywołanie funkcji szukającej
+    std:: cout << min << std::endl;
 
 }
